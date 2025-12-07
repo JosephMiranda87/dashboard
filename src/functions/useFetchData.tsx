@@ -1,0 +1,26 @@
+import { useEffect, useState } from 'react';
+import { type OpenMeteoResponse } from '../types/DashboardTypes';
+
+export default function useFetchData() : OpenMeteoResponse | undefined{
+
+    const  URL = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=America%2FChicago';
+
+    const [data, setData] = useState<OpenMeteoResponse>();
+
+     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(URL);
+                const json = await response.json();
+                setData(json as OpenMeteoResponse); 
+            } catch (error) {
+                console.error('Error fetching data', error);
+            }
+        };
+
+        fetchData(); 
+    }, []); 
+
+    return data;
+
+}

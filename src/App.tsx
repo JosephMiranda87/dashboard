@@ -22,7 +22,7 @@ function App() {
 
       {/* Encabezado */}
       <Grid size={12}>
-        <HeaderUI />
+        <HeaderUI/>
       </Grid>
 
       {/* Alertas */}
@@ -39,7 +39,7 @@ function App() {
       <Grid container size={{ xs: 12, md: 9 }} >
 
         {/* Temperatura (2m) */}
-        <Grid container size={{ xs: 12, md: 3 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <IndicatorUI
             title="Temperatura (2m)"
             description={getDescription(
@@ -50,7 +50,7 @@ function App() {
         </Grid>
 
         {/* Temperatura Aparente */}
-        <Grid container size={{ xs: 12, md: 3 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <IndicatorUI
             title="Temperatura Aparente"
             description={getDescription(
@@ -61,7 +61,7 @@ function App() {
         </Grid>
 
         {/* Velocidad del Viento */}
-        <Grid container size={{ xs: 12, md: 3 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <IndicatorUI
             title="Velocidad del viento"
             description={getDescription(
@@ -72,7 +72,7 @@ function App() {
         </Grid>
 
         {/* Humedad Relativa */}
-        <Grid container size={{ xs: 12, md: 3 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <IndicatorUI
             title="Humedad relativa"
             description={getDescription(
@@ -94,7 +94,8 @@ function App() {
       >Elemento: Tabla</Grid>
 
       {/* Información adicional */}
-      <Grid size={{ xs: 12, md: 12 }}>Elemento: Información adicional</Grid>
+      <Grid size={{ xs: 12, md: 12 }}>
+        Elemento: Información adicional</Grid>
 
     </Grid>
   );

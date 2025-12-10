@@ -1,5 +1,6 @@
 import './App.css'
 
+import { useState } from 'react';
 import { Grid } from '@mui/material';
 import HeaderUI from './components/HeaderUI';
 import AlertUI from './components/AlertUI';
@@ -10,7 +11,8 @@ import TableUI from './components/TableUI';
 import ChartUI from './components/ChartUI';
 
 function App() {
-  const { data, loading, error } = useFetchData();
+   const [selectedCity, setSelectedCity] = useState<string>("guayaquil");
+  const { data, loading, error } = useFetchData(selectedCity);
 
   const getDescription = (value?: number, unit?: string) => {
     if (loading) return 'Cargando...';
@@ -24,7 +26,7 @@ function App() {
 
       {/* Encabezado */}
       <Grid size={12}>
-        <HeaderUI />
+        <HeaderUI/>
       </Grid>
 
       {/* Alertas */}
@@ -34,7 +36,7 @@ function App() {
 
       {/* Selector */}
       <Grid size={{ xs: 12, md: 3 }}>
-        <SelectorUI />
+        <SelectorUI onOptionSelect={setSelectedCity} />
       </Grid>
 
       {/* Indicadores */}
@@ -88,14 +90,14 @@ function App() {
       {/* Gráfico */}
       <Grid size={{ xs: 12, md: 6 }}
         sx={{ display: { xs: "none", md: "block" } }} >
-        <ChartUI />
+        <ChartUI data={data} loading={loading} error={error} />
       </Grid>
 
       {/* Tabla */}
       <Grid size={{ xs: 12, md: 6 }}
         sx={{ display: { xs: "none", md: "block" } }}
       >
-        <TableUI />
+        <TableUI data={data} loading={loading} error={error} />
       </Grid>
 
       {/* Información adicional */}

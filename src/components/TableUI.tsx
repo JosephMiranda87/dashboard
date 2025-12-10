@@ -1,38 +1,32 @@
 import Box from '@mui/material/Box';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
-import useFetchData from '../functions/useFetchData';
+import { type OpenMeteoResponse } from '../types/DashboardTypes';
+
+interface TableProps {
+  data: OpenMeteoResponse | null;
+  loading: boolean;
+  error: string | null;
+}
 
 function combineArrays(
-  arrLabels: Array<string>,
-  arrValues1: Array<number>,
-  arrValues2: Array<number>
+  arrLabels: string[],
+  arrValues1: number[],
+  arrValues2: number[]
 ) {
   return arrLabels.map((label, index) => ({
     id: index,
-    label: label,
-    value1: arrValues1[index],
-    value2: arrValues2[index],
+    label,              // Hora
+    value1: arrValues1[index], // Temperatura
+    value2: arrValues2[index], // Viento
   }));
 }
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'label',
-    headerName: 'Hora',
-    width: 150,
-  },
-  {
-    field: 'value1',
-    headerName: 'Temp (°C)',
-    width: 130,
-  },
-  {
-    field: 'value2',
-    headerName: 'Viento (km/h)',
-    width: 140,
-  },
-  {
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'label', headerName: 'Hora', width: 120 },
+  { field: 'value1', headerName: 'Temp (°C)', width: 120 },
+  { field: 'value2', headerName: 'Viento (km/h)', width: 140 },
+ {
     field: 'resumen',
     headerName: 'Resumen',
     description: 'No es posible ordenar u ocultar esta columna.',
@@ -44,9 +38,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-export default function TableUI() {
-  const { data, loading, error } = useFetchData();
-
+export default function TableUI({ data, loading, error }: TableProps) {
   if (loading) {
     return (
       <Box sx={{ height: 120, display: 'flex', alignItems: 'center' }}>
@@ -71,10 +63,11 @@ export default function TableUI() {
     );
   }
 
-  // Usamos las series horarias de la API (puedes limitar a 24 horas si quieres)
-  const labels = data.hourly.time.map((t) => t.substring(11, 16)); // HH:MM
-  const temps = data.hourly.temperature_2m;
-  const winds = data.hourly.wind_speed_10m;
+  // Máximo 100 filas
+  const maxRows = 100;
+  const labels = data.hourly.time.slice(0, maxRows).map((t) => t.substring(11, 16));
+  const temps = data.hourly.temperature_2m.slice(0, maxRows);
+  const winds = data.hourly.wind_speed_10m.slice(0, maxRows);
 
   const rows = combineArrays(labels, temps, winds);
 
@@ -85,12 +78,10 @@ export default function TableUI() {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: {
-              pageSize: 10,
-            },
+            paginationModel: { pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[5, 10, 25]}
         disableRowSelectionOnClick
       />
     </Box>

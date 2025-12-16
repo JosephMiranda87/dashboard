@@ -27,8 +27,7 @@ export default function useFetchData(selectedCity: string | null): UseFetchDataS
 
         const cityKey = selectedCity ?? 'guayaquil';
         const cityConfig = CITY_COORDS[cityKey];
-
-        const URL = `https://api.open-meteo.com/v1/forecast?latitude=${cityConfig.latitude}&longitude=${cityConfig.longitude}&hourly=temperature_2m,wind_speed_10m&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m`;
+        const URL = `https://api.open-meteo.com/v1/forecast?latitude=${cityConfig.latitude}&longitude=${cityConfig.longitude}&hourly=temperature_2m,wind_speed_10m&current=temperature_2m,wind_speed_10m,relative_humidity_2m,apparent_temperature,rain,precipitation&timezone=auto`;
 
         const response = await fetch(URL);
         if (!response.ok) {

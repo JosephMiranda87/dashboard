@@ -46,9 +46,6 @@ export default function ChartUI({ data, loading, error }: ChartProps) {
 
   return (
     <>
-      <Typography variant="h5" component="div" sx={{ mb: 2 }}>
-        Temperatura y velocidad del viento (próximas {labels.length} horas)
-      </Typography>
       <LineChart
         height={300}
         series={[

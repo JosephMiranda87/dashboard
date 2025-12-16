@@ -15,9 +15,9 @@ function combineArrays(
 ) {
   return arrLabels.map((label, index) => ({
     id: index,
-    label,              // Hora
-    value1: arrValues1[index], // Temperatura
-    value2: arrValues2[index], // Viento
+    label,             
+    value1: arrValues1[index], 
+    value2: arrValues2[index], 
   }));
 }
 
@@ -63,8 +63,8 @@ export default function TableUI({ data, loading, error }: TableProps) {
     );
   }
 
-  // Máximo 100 filas
-  const maxRows = 100;
+  // Máximo # filas
+  const maxRows = 24;
   const labels = data.hourly.time.slice(0, maxRows).map((t) => t.substring(11, 16));
   const temps = data.hourly.temperature_2m.slice(0, maxRows);
   const winds = data.hourly.wind_speed_10m.slice(0, maxRows);
@@ -72,16 +72,16 @@ export default function TableUI({ data, loading, error }: TableProps) {
   const rows = combineArrays(labels, temps, winds);
 
   return (
-    <Box sx={{ height: 350, width: '100%' }}>
+    <Box sx={{ height: 1000, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 10 },
+            paginationModel: { pageSize: 24 },
           },
         }}
-        pageSizeOptions={[5, 10, 25]}
+        pageSizeOptions={[5, 10, 24]}
         disableRowSelectionOnClick
       />
     </Box>

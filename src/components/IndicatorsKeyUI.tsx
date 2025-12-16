@@ -118,28 +118,7 @@ function IndicatorCard({
 }
 
 export default function IndicatorsKeyUI({ data, loading, error }: Props) {
-  const [now, setNow] = useState<Date>(new Date());
-
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const timeZone = data?.timezone;
-
-  const timeText = useMemo(() => {
-    try {
-      return now.toLocaleTimeString('es-EC', {
-        timeZone: timeZone,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-    } catch {
-      return now.toLocaleTimeString('es-EC');
-    }
-  }, [now, timeZone]);
-
+  
   if (loading) return <Typography>Cargando indicadores...</Typography>;
   if (error) return <Typography color="error">{error}</Typography>;
   if (!data) return <Typography>No hay datos disponibles.</Typography>;
